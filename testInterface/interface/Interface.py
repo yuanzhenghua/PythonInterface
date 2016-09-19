@@ -10,7 +10,7 @@ from testInterface.public.CreateHeader import *
 
 class Interface(object):
     
-    def interface(self, url, param, pic, times, result):
+    def interface(self, url, cookie, param, pic, times, result):
         detailData = {}
         detailData["Id"] = 1
         starttime = 0 
@@ -20,7 +20,7 @@ class Interface(object):
             params = MakeParams().makeParams(param, pic, times)
             starttime = time.time()
             #rs = module.post(url, param) #调用post方法
-            rs = Post().post(url, params, CreateHeader().getHeader(), "multipart/form-data") #传参url, param, Content-Type方法
+            rs = Post().post(url, params, CreateHeader().getHeader(), cookie, "multipart/form-data") #传参url, param, Content-Type方法
             endtime = time.time()
             if Compare().compare(result, rs): 
                 detailData["result"] = "true"

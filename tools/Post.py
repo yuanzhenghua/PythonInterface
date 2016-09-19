@@ -1,5 +1,5 @@
 #coding=utf-8
-import urllib, urllib2, poster, httplib
+import urllib, urllib2, poster, httplib, cookielib
 import json
 import sys, os, random
 import subprocess
@@ -11,14 +11,14 @@ import subprocess
 
 class Post():
     
-    def post(self, url, param, header, method):
+    def post(self, url, param, header, cookie, method):
         print "url=",url
         print "param=",param
         if method == "multipart/form-data":
-            ajaxResponse = self.post_multipart_form_data(url, param, header)
+            ajaxResponse = self.post_multipart_form_data(url, param, header, cookie)
         return ajaxResponse
     
-    def post_multipart_form_data(self, url, param, header, referer=None):
+    def post_multipart_form_data(self, url, param, header, cookie, referer=None):
         try:
             poster.streaminghttp.register_openers()
             datagen, headers = poster.encode.multipart_encode(param)
@@ -26,7 +26,11 @@ class Post():
                 for k in header:
                     headers[k] = header[k]
             request = urllib2.Request(url, datagen, headers)
-            rs = urllib2.urlopen(request).read()
+            if cookie<>"":
+                cookiejar = cookielib.CookieJar()
+                rs = urllib2.build_opener(urllib2.HTTPCookieProcessor(cookiejar)).urlopen(request).read()
+            else:
+                rs = urllib2.urlopen(request).read()
             #print "rs=",rs
             if ""<>rs:
                 rs = json.loads(rs)
