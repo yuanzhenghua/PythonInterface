@@ -1,8 +1,8 @@
 #coding=utf-8
-import urllib, urllib2, poster, httplib
 import json
 import sys, os, random
 import subprocess
+from urllib import request
 #stdi,stdo,stde=sys.stdin,sys.stdout,sys.stderr
 #reload(sys)
 #sys.stdin,sys.stdout,sys.stderr=stdi,stdo,stde
@@ -13,7 +13,7 @@ class Get():
     
     def get(self, url):
         try:
-            rs =  urllib2.urlopen(url)
+            rs =  request.Request(url)
             if ""<>rs:
                     rs = json.loads(rs)
             print "rs=",json.dumps(rs ,ensure_ascii=False)

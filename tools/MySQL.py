@@ -1,5 +1,5 @@
 #coding=utf-8
-import MySQLdb
+import pymysql
 
 class MySQL(object):
 
@@ -12,7 +12,7 @@ class MySQL(object):
     
     def __GetConnect(self):
         try: 
-            self.conn = MySQLdb.connect(host=self.host,port=self.port,user=self.user,passwd=self.pwd,db=self.db)
+            self.conn = pymysql.connect(host=self.host,port=self.port,user=self.user,passwd=self.pwd,db=self.db)
             cur = self.conn.cursor()   
             if not cur:  
                 raise(NameError,"杩炴帴鏁版嵁搴撳け璐�")  
@@ -25,7 +25,7 @@ class MySQL(object):
         try:  
             if self.host=='':  
                 return ""  
-            conn = MySQLdb.connect(host=self.host,port=self.port,user=self.user,passwd=self.pwd,db=self.db)  
+            conn = pymysql.connect(host=self.host,port=self.port,user=self.user,passwd=self.pwd,db=self.db)  
             return conn  
         except:  
             return ""  

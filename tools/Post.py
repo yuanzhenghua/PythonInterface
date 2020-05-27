@@ -1,8 +1,9 @@
 #coding=utf-8
-import urllib, urllib2, poster, httplib, cookielib
+import poster3
 import json
-import sys, os, random
-import subprocess
+from urllib import request
+from http import cookiejar
+
 #stdi,stdo,stde=sys.stdin,sys.stdout,sys.stderr
 #reload(sys)
 #sys.stdin,sys.stdout,sys.stderr=stdi,stdo,stde
@@ -20,17 +21,17 @@ class Post():
     
     def post_multipart_form_data(self, url, param, header, cookie, referer=None):
         try:
-            poster.streaminghttp.register_openers()
-            datagen, headers = poster.encode.multipart_encode(param)
+            poster3.streaminghttp.register_openers()
+            datagen, headers = poster3.encode.multipart_encode(param)
             if header <> "":
                 for k in header:
                     headers[k] = header[k]
-            request = urllib2.Request(url, datagen, headers)
+            request = request.Request(url, datagen, headers)
             if cookie<>"":
-                cookiejar = cookielib.CookieJar()
-                rs = urllib2.build_opener(urllib2.HTTPCookieProcessor(cookiejar)).urlopen(request).read()
+                cookiejar = cookiejar.CookieJar()
+                rs = request.build_opener(request.HTTPCookieProcessor(cookiejar)).urlopen(request).read()
             else:
-                rs = urllib2.urlopen(request).read()
+                rs = request.urlopen(request).read()
             #print "rs=",rs
             if ""<>rs:
                 rs = json.loads(rs)
